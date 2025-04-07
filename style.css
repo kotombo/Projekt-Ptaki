@@ -1,0 +1,132 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #dbeafe, #eff6ff);
+    color: #1e293b;
+  }
+  
+  header {
+    background-color: #1e40af;
+    padding: 1em;
+    color: white;
+    text-align: center;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: center;
+    background-color: #3b82f6;
+  }
+  
+  nav a {
+    padding: 1em 2em;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  nav a:hover {
+    background-color: #1e3a8a;
+  }
+  
+  main {
+    padding: 2em;
+    text-align: center;
+  }
+  
+  .top-controls {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin-bottom: 1.5em;
+  }
+  
+  input[type="file"] {
+    margin: 1em 0;
+  }
+  
+  button {
+    padding: 0.7em 1.5em;
+    background-color: #1e40af;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1em;
+    border-radius: 6px;
+  }
+  
+  button:hover {
+    background-color: #1e3a8a;
+    transform: scale(1.05);
+  }
+  
+  #api-response {
+    margin-top: 2em;
+    background-color: #f1f5f9;
+    padding: 1em;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  /* 🌙 Tryb ciemny */
+  body.dark {
+    background: linear-gradient(to right, #1e293b, #334155);
+    color: #f1f5f9;
+  }
+  
+  body.dark header {
+    background-color: #0f172a;
+  }
+  
+  body.dark nav {
+    background-color: #1e3a8a;
+  }
+  
+  body.dark nav a:hover {
+    background-color: #0f172a;
+  }
+  
+  body.dark main,
+  body.dark #api-response {
+    background-color: #1e293b;
+    color: #f1f5f9;
+  }
+  #api-response ol {
+    list-style-position: inside;
+    padding: 0;
+  }
+  
+  #api-response li {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 1em;
+    line-height: 1.4;
+  }
+  
+  .result-image {
+    width: 60px;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.1);
+  }
+  
+  .result-info a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+  }
+  
+  .result-info a:hover {
+    text-decoration: underline;
+  }
+   

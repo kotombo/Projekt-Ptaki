@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bird Identifier</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+  <header>
+    <h1>Bird Identifier</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Strona główna</a>
+    <a href="authors.html">Autorzy</a>
+  </nav>
+
+  <main>
+    <div class="top-controls">
+      <button id="toggle-theme">🌗 Zmień tryb</button>
+      <select id="language-select">
+        <option value="pl">PL</option>
+        <option value="en">EN</option>
+      </select>
+    </div>
+
+    <section id="home">
+      <h2>Wgraj zdjęcie ptaka, aby rozpocząć identyfikację</h2>
+      <form id="upload-form">
+        <input type="file" id="bird-photo" accept="image/*" required /> <br />
+        <button type="submit">Zidentyfikuj</button>
+      </form>
+
+      <div id="loading-spinner" class="hidden">⏳ Przetwarzanie zdjęcia...</div>
+      <div id="api-response" data-error="Nie udało się rozpoznać ptaka."></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

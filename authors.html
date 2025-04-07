@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autorzy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+  <header>
+    <h1>Bird Identifier</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Strona główna</a>
+    <a href="authors.html">Autorzy</a>
+  </nav>
+
+  <main>
+    <section id="authors">
+      <h2>Autorzy</h2>
+      <ul style="list-style: none; padding: 0;">
+        <li>Mateusz Rutkowski</li>
+        <li>Konrad Typa</li>
+        <li>ChatGPT</li>
+      </ul>
+    </section>
+  </main>
+  <div style="text-align: center; margin-top: 1em;">
+  <button id="toggle-theme">🌗 Zmień tryb</button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('toggle-theme');
+    btn?.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+  });
+</script>
+</body>
+</html>
