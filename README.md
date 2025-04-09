@@ -62,3 +62,4 @@ Konrad Typa
 MIT – używaj, modyfikuj, rozwijaj!
 
 
+proba1
