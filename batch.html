@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Batch Identifier</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="dark">
+  <header>
+    <h1>Bird Identifier - Folder</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Strona główna</a>
+    <a href="batch.html">Folder</a>
+    <a href="authors.html">Autorzy</a>
+
+  </nav>
+
+  <main>
+    <div class="top-controls">
+      <button id="toggle-theme">Zmień tryb</button>
+    </div>
+
+    <section>
+      <h2>Wgraj folder ze zdjęciami ptaków</h2>
+      <form id="batch-form">
+        <input type="file" id="folder-upload" webkitdirectory directory multiple accept="image/*" required />
+        <br />
+        <button type="submit">Zidentyfikuj wszystkie</button>
+      </form>
+
+      <div id="loading-spinner" class="hidden">Przetwarzanie...</div>
+      <div id="batch-response"></div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('batch-form');
+      const input = document.getElementById('folder-upload');
+      const spinner = document.getElementById('loading-spinner');
+      const resultBox = document.getElementById('batch-response');
+      const themeBtn = document.getElementById('toggle-theme');
+
+      themeBtn?.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+      });
+
+      // Przycisk do pobrania notatnika
+      const downloadBtn = document.createElement('button');
+      downloadBtn.textContent = 'Pobierz notatnik';
+      downloadBtn.style.marginTop = '1em';
+      downloadBtn.addEventListener('click', () => {
+        const saved = localStorage.getItem('notatnik') || '';
+        const blob = new Blob([saved], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'notatnik.txt';
+        a.click();
+      });
+      resultBox.parentElement.appendChild(downloadBtn);
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        spinner.classList.remove('hidden');
+        resultBox.innerHTML = '';
+        localStorage.setItem('notatnik', ''); // czyść poprzednie dane
+
+        const files = Array.from(input.files);
+
+        for (const file of files) {
+          const formData = new FormData();
+          formData.append('image', file);
+
+          try {
+            const response = await fetch('http://localhost:3001/api/identify', {
+              method: 'POST',
+              body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.results && result.results.length > 0) {
+              const sorted = result.results.sort((a, b) => {
+                const aScore = a.vision_score || a.combined_score || 0;
+                const bScore = b.vision_score || b.combined_score || 0;
+                return bScore - aScore;
+              });
+
+              const best = sorted[0];
+              const engName = best.taxon.preferred_common_name || best.taxon.name || 'brak';
+              const latinName = best.taxon.name || 'brak';
+              const score = Math.round(best.vision_score || best.combined_score || 0);
+              const fileName = file.name.replace(/\.[^/.]+$/, '');
+              const line = `${fileName};${engName};${latinName};${score}\n`;
+
+              const prev = localStorage.getItem('notatnik') || '';
+              localStorage.setItem('notatnik', prev + line);
+
+              const percentText = typeof score === 'number' ? `${score}%` : 'Brak danych';
+              const photoUrl = best.taxon.default_photo?.medium_url || '';
+
+              resultBox.innerHTML += `<div><strong>${file.name}:</strong> ${engName} (${percentText})<br><img src="${photoUrl}" class="result-image" /></div><hr />`;
+            } else {
+              resultBox.innerHTML += `<div><strong>${file.name}:</strong> Nie rozpoznano</div><hr />`;
+            }
+          } catch (err) {
+            resultBox.innerHTML += `<div><strong>${file.name}:</strong> Błąd serwera</div><hr />`;
+          }
+        }
+
+        spinner.classList.add('hidden');
+        resultBox.innerHTML += '<p>Przetwarzanie zakończone. Możesz pobrać notatnik.</p>';
+      });
+    });
+  </script>
+</body>
+</html>

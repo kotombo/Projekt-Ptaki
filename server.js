@@ -3,14 +3,17 @@ const multer = require('multer');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const FormData = require('form-data');
 const cors = require('cors');
+const fs = require('fs');  // Zaimportowanie modułu fs
 
 const app = express();
 const upload = multer();
 app.use(cors());
 
-// Token:
-const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTA0NzcxLCJleHAiOjE3NDQzMDk4MzJ9.EJYex1cEp8S9-V5Fu3I-DhSUB270MkEHQkZmUNs38GHrm45okKZ_G1pSD0M-Xctf_S14ZLWtPauHNfdh8wRtCg';
-const USER_AGENT = 'kotombo/1.0 (kotomboo@gmail.com)';
+// 🔑 Wstaw swój token tutaj (jeśli masz):
+const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTEzMTgxLCJleHAiOjE3NDQzMDU5Njh9.JxK9EdMEP02SCCAyPcxWu-d3-nLB-VbcHTFiO0GgAvKSH0mYI8D6_KdXBFQfQrZfXRDok_Z5RxW0jH9bV9IF_w';
+
+// Możesz też ustawić własną nazwę aplikacji (zalecane przez iNaturalist):
+const USER_AGENT = 'kornad/1.0 (loll70760@gmail.com)';
 
 app.post('/api/identify', upload.single('image'), async (req, res) => {
   try {
@@ -29,9 +32,32 @@ app.post('/api/identify', upload.single('image'), async (req, res) => {
     });
 
     const data = await response.json();
-    console.log("🔥 Odpowiedź z API:");
-    console.dir(data, { depth: null });
+    
+    // Sortowanie wyników według punktacji malejąco
+    const sortedResults = data.results.sort((a, b) => {
+      const aScore = a.vision_score || a.combined_score || 0;
+      const bScore = b.vision_score || b.combined_score || 0;
+      return bScore - aScore;
+    });
 
+    // Pobranie ptaka z najwyższą punktacją
+    const bestResult = sortedResults[0];
+    const bestBirdName = bestResult.taxon.name;
+    const bestBirdScore = bestResult.vision_score || bestResult.combined_score;
+
+    // Przygotowanie treści do zapisania w pliku
+    const resultText = `${bestBirdName}, ${Math.round(bestBirdScore)}%\n`;
+
+    // Zapisanie wyniku do pliku .txt
+    fs.appendFile('bird_identification_result.txt', resultText, (err) => {
+      if (err) {
+        console.error('Błąd podczas zapisywania pliku:', err);
+        return res.status(500).json({ error: 'Błąd podczas zapisywania pliku z wynikiem.' });
+      }
+      console.log('Wynik zapisano do pliku bird_identification_result.txt');
+    });
+
+    // Zwrócenie odpowiedzi na frontend
     res.json(data);
   } catch (error) {
     console.error('Błąd podczas rozpoznawania ptaka:', error);
