@@ -41,7 +41,7 @@ node server.js
 
 ```
 
-3 **Otwórz frontend**
+3. **Otwórz frontend**
 
 Po prostu otwórz plik index.html w przeglądarce.
 (Backend działa domyślnie na http://localhost:3001)
