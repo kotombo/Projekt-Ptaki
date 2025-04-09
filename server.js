@@ -9,8 +9,8 @@ const upload = multer();
 app.use(cors());
 
 // Token:
-const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTEzMTgxLCJleHAiOjE3NDQzMDU5Njh9.JxK9EdMEP02SCCAyPcxWu-d3-nLB-VbcHTFiO0GgAvKSH0mYI8D6_KdXBFQfQrZfXRDok_Z5RxW0jH9bV9IF_w';
-const USER_AGENT = 'kornad/1.0 (loll70760@gmail.com)';
+const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTA0NzcxLCJleHAiOjE3NDQzMDk4MzJ9.EJYex1cEp8S9-V5Fu3I-DhSUB270MkEHQkZmUNs38GHrm45okKZ_G1pSD0M-Xctf_S14ZLWtPauHNfdh8wRtCg';
+const USER_AGENT = 'kotombo/1.0 (kotomboo@gmail.com)';
 
 app.post('/api/identify', upload.single('image'), async (req, res) => {
   try {
