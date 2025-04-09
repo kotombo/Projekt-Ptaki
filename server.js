@@ -8,10 +8,8 @@ const app = express();
 const upload = multer();
 app.use(cors());
 
-// 🔑 Wstaw swój token tutaj (jeśli masz):
+// Token:
 const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTEzMTgxLCJleHAiOjE3NDQzMDU5Njh9.JxK9EdMEP02SCCAyPcxWu-d3-nLB-VbcHTFiO0GgAvKSH0mYI8D6_KdXBFQfQrZfXRDok_Z5RxW0jH9bV9IF_w';
-
-// Możesz też ustawić własną nazwę aplikacji (zalecane przez iNaturalist):
 const USER_AGENT = 'kornad/1.0 (loll70760@gmail.com)';
 
 app.post('/api/identify', upload.single('image'), async (req, res) => {
