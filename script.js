@@ -97,29 +97,26 @@ document.addEventListener('DOMContentLoaded', function () {
           return bScore - aScore;
         });
 
-        const listItems = sorted.map((r) => {
-          const rawScore = r.vision_score || r.combined_score;
-          const percentText = typeof rawScore === 'number' ? `${Math.round(rawScore)}%` : 'Brak danych';
+        const best = sorted[0];
+        const rawScore = best.vision_score || best.combined_score;
+        const percentText = typeof rawScore === 'number' ? `${Math.round(rawScore)}%` : 'Brak danych';
 
-          const name = r.taxon.name;
-          const photoUrl = r.taxon.default_photo?.medium_url || '';
-          const wikiUrl = r.taxon.wikipedia_url || '#';
+        const name = best.taxon.name;
+        const photoUrl = best.taxon.default_photo?.medium_url || '';
+        const wikiUrl = best.taxon.wikipedia_url || '#';
 
-          const nameLink = wikiUrl !== '#' 
-            ? `<a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${name}</a>` 
-            : name;
+        const nameLink = wikiUrl !== '#' 
+          ? `<a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${name}</a>` 
+          : name;
 
-          const image = photoUrl
-            ? `<img src="${photoUrl}" alt="${name}" class="result-image" />`
-            : '';
+        const image = photoUrl
+          ? `<img src="${photoUrl}" alt="${name}" class="result-image" />`
+          : '';
 
-          return `<li>${image}<div class="result-info">${nameLink} (${percentText})</div></li>`;
-        }).join('');
+        resultBox.innerHTML = `<ul><li>${image}<div class="result-info">${nameLink} (${percentText})</div></li></ul>`;
 
-        resultBox.innerHTML = `<ol>${listItems}</ol>`;
 
         // Zapis do notatnika_single
-        const best = sorted[0];
         const fullName = selectedFile.name || 'brak_nazwy';
         const fileName = fullName.replace(/\.[^/.]+$/, '');
         const engName = best.taxon.preferred_common_name || best.taxon.name || 'brak';
