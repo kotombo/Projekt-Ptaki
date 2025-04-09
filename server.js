@@ -9,10 +9,10 @@ const upload = multer();
 app.use(cors());
 
 // 🔑 Wstaw swój token tutaj (jeśli masz):
-const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTA0NzcxLCJleHAiOjE3NDQxNDUzOTR9.6PZp-K6_pz1zF_RSo9tkEuBrssWVTl99NzGUmv3tWaUcWlwGKfSxE35aolgm9Fj5cEeoIcM_s5rIuW5-tttkgw'; // np. 'Bearer eyJ0eXAiOiJK...'
+const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTEzMTgxLCJleHAiOjE3NDQzMDU5Njh9.JxK9EdMEP02SCCAyPcxWu-d3-nLB-VbcHTFiO0GgAvKSH0mYI8D6_KdXBFQfQrZfXRDok_Z5RxW0jH9bV9IF_w';
 
 // Możesz też ustawić własną nazwę aplikacji (zalecane przez iNaturalist):
-const USER_AGENT = 'kotombo/1.0 (kotomboo@gmail.com)';
+const USER_AGENT = 'kornad/1.0 (loll70760@gmail.com)';
 
 app.post('/api/identify', upload.single('image'), async (req, res) => {
   try {
