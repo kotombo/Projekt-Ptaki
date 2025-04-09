@@ -3,9 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const spinner = document.getElementById('loading-spinner');
   const resultBox = document.getElementById('api-response');
 
-  // 3. Tryb jasny/ciemny z localStorage
   const themeBtn = document.getElementById('toggle-theme');
-
   function applyTheme(theme) {
     if (theme === 'dark') {
       document.body.classList.add('dark');
@@ -13,12 +11,10 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.classList.remove('dark');
     }
   }
-
   function toggleTheme() {
     const isDark = document.body.classList.toggle('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }
-
   themeBtn?.addEventListener('click', toggleTheme);
   const savedTheme = localStorage.getItem('theme') || 'dark';
   applyTheme(savedTheme);
@@ -51,17 +47,25 @@ document.addEventListener('DOMContentLoaded', function () {
     downloadBtn.textContent = text[lang].download;
   });
 
-  // Przycisk pobierania notatnika
+  // Przycisk pobierania notatnika z usunięciem
   const downloadBtn = document.createElement('button');
   downloadBtn.textContent = 'Pobierz notatnik';
   downloadBtn.style.marginTop = '1em';
   downloadBtn.addEventListener('click', () => {
-    const savedLines = localStorage.getItem('notatnik') || '';
-    const blob = new Blob([savedLines], { type: 'text/plain' });
+    const single = localStorage.getItem('notatnik_single') || '';
+    const batch = localStorage.getItem('notatnik_batch') || '';
+    const combined = single + batch;
+    if (!combined.trim()) return;
+
+    const blob = new Blob([combined], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    a.href = url;
     a.download = 'notatnik.txt';
     a.click();
+    URL.revokeObjectURL(url);
+    localStorage.removeItem('notatnik_single');
+    localStorage.removeItem('notatnik_batch');
   });
   resultBox.parentElement.appendChild(downloadBtn);
 
@@ -101,8 +105,8 @@ document.addEventListener('DOMContentLoaded', function () {
           const photoUrl = r.taxon.default_photo?.medium_url || '';
           const wikiUrl = r.taxon.wikipedia_url || '#';
 
-          const nameLink = wikiUrl !== '#'
-            ? `<a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${name}</a>`
+          const nameLink = wikiUrl !== '#' 
+            ? `<a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${name}</a>` 
             : name;
 
           const image = photoUrl
@@ -114,17 +118,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         resultBox.innerHTML = `<ol>${listItems}</ol>`;
 
-        // Zapis do notatnika
+        // Zapis do notatnika_single
         const best = sorted[0];
         const fullName = selectedFile.name || 'brak_nazwy';
-        const fileName = fullName.replace(/\.[^/.]+$/, ''); // bez rozszerzenia
+        const fileName = fullName.replace(/\.[^/.]+$/, '');
         const engName = best.taxon.preferred_common_name || best.taxon.name || 'brak';
         const latinName = best.taxon.name || 'brak';
         const score = Math.round(best.vision_score || best.combined_score || 0);
         const line = `${fileName};${engName};${latinName};${score}\n`;
 
-        const prev = localStorage.getItem('notatnik') || '';
-        localStorage.setItem('notatnik', prev + line);
+        const prev = localStorage.getItem('notatnik_single') || '';
+        localStorage.setItem('notatnik_single', prev + line);
 
       } else {
         resultBox.textContent = resultBox.getAttribute('data-error') || 'Nie udało się rozpoznać ptaka.';
@@ -137,6 +141,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-
-
-  
