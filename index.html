@@ -1,3 +1,4 @@
+<!-- index.html - Strona główna aplikacji Bird Identifier -->
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -7,17 +8,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark">
+  <!-- Nagłówek aplikacji -->
   <header>
     <h1>Bird Identifier</h1>
   </header>
 
+  <!-- Pasek nawigacji -->
   <nav>
     <a href="index.html">Strona główna</a>
     <a href="batch.html">Folder</a>
     <a href="authors.html">Autorzy</a>
-
   </nav>
 
+  <!-- Sekcja główna zawierająca formularz identyfikacji -->
   <main>
     <div class="top-controls">
       <button id="toggle-theme">Zmień tryb</button>
@@ -30,13 +33,16 @@
         <button type="submit">Zidentyfikuj</button>
       </form>
 
+      <!-- Elementy odpowiedzialne za feedback użytkownika -->
       <div id="loading-spinner" class="hidden">Przetwarzanie zdjęcia...</div>
       <div id="api-response" data-error="Nie udało się rozpoznać ptaka."></div>
     </section>
   </main>
 
+  <!-- Skrypt z logiką interfejsu -->
   <script src="script.js"></script>
 </body>
 </html>
+
 
 

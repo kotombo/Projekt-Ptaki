@@ -11,18 +11,20 @@
     <h1>Bird Identifier - Folder</h1>
   </header>
 
+  <!-- Pasek nawigacyjny -->
   <nav>
     <a href="index.html">Strona główna</a>
     <a href="batch.html">Folder</a>
     <a href="authors.html">Autorzy</a>
-
   </nav>
 
   <main>
     <div class="top-controls">
+      <!-- Przycisk do zmiany trybu -->
       <button id="toggle-theme">Zmień tryb</button>
     </div>
 
+    <!-- Sekcja z formularzem do przesyłania folderu zdjęć -->
     <section>
       <h2>Wgraj folder ze zdjęciami ptaków</h2>
       <form id="batch-form">
@@ -31,7 +33,9 @@
         <button type="submit">Zidentyfikuj wszystkie</button>
       </form>
 
+      <!-- Spinner podczas przetwarzania -->
       <div id="loading-spinner" class="hidden">Przetwarzanie...</div>
+      <!-- Miejsce na wyniki -->
       <div id="batch-response"></div>
     </section>
   </main>
@@ -44,11 +48,12 @@
       const resultBox = document.getElementById('batch-response');
       const themeBtn = document.getElementById('toggle-theme');
 
+      // Zmiana trybu ciemny/jasny
       themeBtn?.addEventListener('click', () => {
         document.body.classList.toggle('dark');
       });
 
-      // Przycisk do pobrania notatnika
+      // Tworzenie przycisku do pobrania wyników jako notatnika
       const downloadBtn = document.createElement('button');
       downloadBtn.textContent = 'Pobierz notatnik';
       downloadBtn.style.marginTop = '1em';
@@ -62,11 +67,12 @@
       });
       resultBox.parentElement.appendChild(downloadBtn);
 
+      // Obsługa formularza – identyfikacja każdego zdjęcia z folderu
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         spinner.classList.remove('hidden');
         resultBox.innerHTML = '';
-        localStorage.setItem('notatnik', ''); // czyść poprzednie dane
+        localStorage.setItem('notatnik', ''); // czyści poprzednie dane
 
         const files = Array.from(input.files);
 
@@ -83,6 +89,7 @@
             const result = await response.json();
 
             if (result.results && result.results.length > 0) {
+              // Sortowanie i wybór najlepszego wyniku
               const sorted = result.results.sort((a, b) => {
                 const aScore = a.vision_score || a.combined_score || 0;
                 const bScore = b.vision_score || b.combined_score || 0;
@@ -102,6 +109,7 @@
               const percentText = typeof score === 'number' ? `${score}%` : 'Brak danych';
               const photoUrl = best.taxon.default_photo?.medium_url || '';
 
+              // Wyświetlenie wyniku na stronie
               resultBox.innerHTML += `<div><strong>${file.name}:</strong> ${engName} (${percentText})<br><img src="${photoUrl}" class="result-image" /></div><hr />`;
             } else {
               resultBox.innerHTML += `<div><strong>${file.name}:</strong> Nie rozpoznano</div><hr />`;
