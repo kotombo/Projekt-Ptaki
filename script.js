@@ -1,8 +1,11 @@
+// Główna funkcja uruchamiana po załadowaniu strony
 document.addEventListener('DOMContentLoaded', function () {
+  // Formularz do przesyłania jednego zdjęcia
   const form = document.getElementById('upload-form');
   const spinner = document.getElementById('loading-spinner');
   const resultBox = document.getElementById('api-response');
 
+  // Przełącznik trybu jasny/ciemny
   const themeBtn = document.getElementById('toggle-theme');
   function applyTheme(theme) {
     if (theme === 'dark') {
@@ -11,35 +14,25 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.classList.remove('dark');
     }
   }
+
+  // Funkcja do zmiany trybu i zapisania go w localStorage
   function toggleTheme() {
     const isDark = document.body.classList.toggle('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }
+
   themeBtn?.addEventListener('click', toggleTheme);
   const savedTheme = localStorage.getItem('theme') || 'dark';
   applyTheme(savedTheme);
 
-  // 8. Przełącznik języka
+  // Obsługa przełącznika języka PL/EN
   const langSelect = document.getElementById('language-select');
   langSelect?.addEventListener('change', (e) => {
     const lang = e.target.value;
     const text = {
-      pl: {
-        title: 'Wgraj zdjęcie ptaka, aby rozpocząć identyfikację',
-        button: 'Zidentyfikuj',
-        loading: 'Przetwarzanie zdjęcia...',
-        error: 'Nie udało się rozpoznać ptaka.',
-        download: 'Pobierz notatnik'
-      },
-      en: {
-        title: 'Upload a bird photo to start identification',
-        button: 'Identify',
-        loading: 'Processing image...',
-        error: 'Bird could not be identified.',
-        download: 'Download notebook'
-      }
+      pl: { title: 'Wgraj zdjęcie ptaka, aby rozpocząć identyfikację', button: 'Zidentyfikuj', loading: 'Przetwarzanie zdjęcia...', error: 'Nie udało się rozpoznać ptaka.', download: 'Pobierz notatnik' },
+      en: { title: 'Upload a bird photo to start identification', button: 'Identify', loading: 'Processing image...', error: 'Bird could not be identified.', download: 'Download notebook' }
     };
-
     document.querySelector('#home h2').textContent = text[lang].title;
     document.querySelector('#upload-form button').textContent = text[lang].button;
     spinner.textContent = text[lang].loading;
@@ -47,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
     downloadBtn.textContent = text[lang].download;
   });
 
-  // Przycisk pobierania notatnika z usunięciem
+  // Przycisk pobierania pliku tekstowego z wynikami
   const downloadBtn = document.createElement('button');
   downloadBtn.textContent = 'Pobierz notatnik';
   downloadBtn.style.marginTop = '1em';
@@ -71,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!form) return;
 
+  // Obsługa wysyłki zdjęcia do API po kliknięciu „Zidentyfikuj”
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     spinner.classList.remove('hidden');
@@ -97,28 +91,31 @@ document.addEventListener('DOMContentLoaded', function () {
           return bScore - aScore;
         });
 
+        // Formatowanie wyników
         const listItems = sorted.map((r) => {
           const rawScore = r.vision_score || r.combined_score;
           const percentText = typeof rawScore === 'number' ? `${Math.round(rawScore)}%` : 'Brak danych';
-
           const name = r.taxon.name;
           const photoUrl = r.taxon.default_photo?.medium_url || '';
           const wikiUrl = r.taxon.wikipedia_url || '#';
+          const engName = r.taxon.preferred_common_name || r.taxon.name || 'brak'
+          const latinName = r.taxon.name || 'brak'
+          
 
           const nameLink = wikiUrl !== '#' 
-            ? `<a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${name}</a>` 
-            : name;
+            ? `<a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${engName}</a>` 
+            : engName;
 
           const image = photoUrl
-            ? `<img src="${photoUrl}" alt="${name}" class="result-image" />`
+            ? `<img src="${photoUrl}" alt="${engName}" class="result-image" />`
             : '';
 
-          return `<li>${image}<div class="result-info">${nameLink} (${percentText})</div></li>`;
+          return `<li>${image}<div class="result-info">${nameLink} "${name}" (${percentText})</div></li>`;
         }).join('');
 
         resultBox.innerHTML = `<ol>${listItems}</ol>`;
 
-        // Zapis do notatnika_single
+        // Zapis najlepszego wyniku do localStorage
         const best = sorted[0];
         const fullName = selectedFile.name || 'brak_nazwy';
         const fileName = fullName.replace(/\.[^/.]+$/, '');
@@ -128,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const line = `${fileName};${engName};${latinName};${score}\n`;
 
         const prev = localStorage.getItem('notatnik_single') || '';
-        localStorage.setItem('notatnik_single', prev + line);
+        localStorage.setItem('notatnik_single', line);
 
       } else {
         resultBox.textContent = resultBox.getAttribute('data-error') || 'Nie udało się rozpoznać ptaka.';
