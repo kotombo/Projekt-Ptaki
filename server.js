@@ -40,22 +40,8 @@ app.post('/api/identify', upload.single('image'), async (req, res) => {
       return bScore - aScore;
     });
 
-    // Pobranie ptaka z najwyższą punktacją
-    const bestResult = sortedResults[0];
-    const bestBirdName = bestResult.taxon.name;
-    const bestBirdScore = bestResult.vision_score || bestResult.combined_score;
 
-    // Przygotowanie treści do zapisania w pliku
-    const resultText = `${bestBirdName}, ${Math.round(bestBirdScore)}%\n`;
 
-    // Zapisanie wyniku do pliku .txt
-    fs.appendFile('bird_identification_result.txt', resultText, (err) => {
-      if (err) {
-        console.error('Błąd podczas zapisywania pliku:', err);
-        return res.status(500).json({ error: 'Błąd podczas zapisywania pliku z wynikiem.' });
-      }
-      console.log('Wynik zapisano do pliku bird_identification_result.txt');
-    });
 
     // Zwrócenie odpowiedzi na frontend
     res.json(data);

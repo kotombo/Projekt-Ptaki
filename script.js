@@ -27,14 +27,14 @@ document.addEventListener('DOMContentLoaded', function () {
       pl: {
         title: 'Wgraj zdjęcie ptaka, aby rozpocząć identyfikację',
         button: 'Zidentyfikuj',
-        loading: '⏳ Przetwarzanie zdjęcia...',
+        loading: 'Przetwarzanie zdjęcia...',
         error: 'Nie udało się rozpoznać ptaka.',
         download: 'Pobierz notatnik'
       },
       en: {
         title: 'Upload a bird photo to start identification',
         button: 'Identify',
-        loading: '⏳ Processing image...',
+        loading: 'Processing image...',
         error: 'Bird could not be identified.',
         download: 'Download notebook'
       }
