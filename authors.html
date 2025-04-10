@@ -11,39 +11,42 @@
     <h1>Bird Identifier</h1>
   </header>
 
+  <!-- Pasek nawigacyjny -->
   <nav>
     <a href="index.html">Strona główna</a>
     <a href="batch.html">Folder</a>
     <a href="authors.html">Autorzy</a>
-
-
   </nav>
 
   <main>
     <div class="top-controls">
+      <!-- Przycisk zmiany trybu -->
       <button id="toggle-theme">Zmień tryb</button>
     </div>
-  
+
+    <!-- Lista autorów -->
     <section id="authors">
       <h2>Autorzy</h2>
       <ul style="list-style: none; padding: 0;">
         <li>Mateusz Rutkowski</li>
         <li>Konrad Typa</li>
-        
       </ul>
     </section>
   </main>
-  <div style="text-align: center; margin-top: 1em;">
-  <button id="toggle-theme">Zmień tryb</button>
-</div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('toggle-theme');
-    btn?.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
+  <div style="text-align: center; margin-top: 1em;">
+    <!-- Drugi przycisk zmiany trybu (opcjonalny) -->
+    <button id="toggle-theme">Zmień tryb</button>
+  </div>
+
+  <!-- Skrypt do obsługi zmiany trybu jasny/ciemny -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.getElementById('toggle-theme');
+      btn?.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+      });
     });
-  });
-</script>
+  </script>
 </body>
 </html>
