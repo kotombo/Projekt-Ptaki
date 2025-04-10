@@ -10,10 +10,11 @@ const upload = multer();
 app.use(cors());
 
 // 🔑 Wstaw swój token tutaj (jeśli masz):
-const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTEzMTgxLCJleHAiOjE3NDQzMDU5Njh9.JxK9EdMEP02SCCAyPcxWu-d3-nLB-VbcHTFiO0GgAvKSH0mYI8D6_KdXBFQfQrZfXRDok_Z5RxW0jH9bV9IF_w';
+const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTA0NzcxLCJleHAiOjE3NDQzNzEyMDN9.aqPtlVP830WIqPJOJbuJCe12pUz-zyRWDr4t5SGFFdhm7QgNkuOSpm6m9w4sNq1XcXgljK4ty-3PZw-PhQyGKg';
 
-// Możesz też ustawić własną nazwę aplikacji (zalecane przez iNaturalist):
-const USER_AGENT = 'kornad/1.0 (loll70760@gmail.com)';
+// Nagłówek User-Agent zgodny z wymaganiami iNaturalist
+const USER_AGENT = 'kotombo/1.0 (kotomboo@gmail.com)';
+
 
 app.post('/api/identify', upload.single('image'), async (req, res) => {
   try {
@@ -34,6 +35,7 @@ app.post('/api/identify', upload.single('image'), async (req, res) => {
     const data = await response.json();
     
     // Sortowanie wyników według punktacji malejąco
+    
     const sortedResults = data.results.sort((a, b) => {
       const aScore = a.vision_score || a.combined_score || 0;
       const bScore = b.vision_score || b.combined_score || 0;

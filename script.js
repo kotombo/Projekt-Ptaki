@@ -102,18 +102,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const percentText = typeof rawScore === 'number' ? `${Math.round(rawScore)}%` : 'Brak danych';
 
         const name = best.taxon.name;
-        const photoUrl = best.taxon.default_photo?.medium_url || '';
-        const wikiUrl = best.taxon.wikipedia_url || '#';
 
-        const nameLink = wikiUrl !== '#' 
-          ? `<a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${name}</a>` 
-          : name;
-
-        const image = photoUrl
-          ? `<img src="${photoUrl}" alt="${name}" class="result-image" />`
-          : '';
-
-        resultBox.innerHTML = `<ul><li>${image}<div class="result-info">${nameLink} (${percentText})</div></li></ul>`;
+        resultBox.innerHTML = `<ul><li><div class="result-info">${name} (${percentText})</div></li></ul>`;
 
 
         // Zapis do notatnika_single
