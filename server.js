@@ -50,6 +50,9 @@ app.post('/api/identify', upload.single('image'), async (req, res) => {
   } catch (error) {
     console.error('Błąd podczas rozpoznawania ptaka:', error);
     res.status(500).json({ error: 'Wystąpił błąd podczas rozpoznawania zdjęcia.' });
+    setTimeout(() => {
+      res.status(500).json({ error: '5 sekund oddechu' });
+    }, 5000);
   }
 });
 
