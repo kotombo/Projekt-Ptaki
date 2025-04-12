@@ -12,7 +12,7 @@ const upload = multer();
 app.use(cors());
 
 // Token API iNaturalist – wymagany do autoryzacji (należy go trzymać w .env w prawdziwej aplikacji)
-const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTA0NzcxLCJleHAiOjE3NDQzNzEyMDN9.aqPtlVP830WIqPJOJbuJCe12pUz-zyRWDr4t5SGFFdhm7QgNkuOSpm6m9w4sNq1XcXgljK4ty-3PZw-PhQyGKg';
+const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTA0NzcxLCJleHAiOjE3NDQ1NDI3NTR9.6Z4O3MvToOLpQ33wu2Wn1Kk4i_xCWxSLDXioWegkJ-sRHJS5vS0pKDIcBLysIa9WbXEqX0O-yMA-HNl9LXLyEg';
 
 // Nagłówek User-Agent zgodny z wymaganiami iNaturalist
 const USER_AGENT = 'kotombo/1.0 (kotomboo@gmail.com)';
