@@ -17,8 +17,6 @@ const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTEzMTgxLCJleHAiOjE3NDQ2
 // Nagłówek User-Agent zgodny z wymaganiami iNaturalist
 const USER_AGENT = 'kornad/1.0 (loll70760@gmail.com)';
 
-// Nagłówek User-Agent zgodny z wymaganiami iNaturalist
-//const USER_AGENT = 'kotombo/1.0 (kotomboo@gmail.com)';
 
 // Endpoint obsługujący przesłane zdjęcie i przesyłający je do iNaturalist
 app.post('/api/identify', upload.single('image'), async (req, res) => {
@@ -52,10 +50,6 @@ app.post('/api/identify', upload.single('image'), async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error('Błąd podczas rozpoznawania ptaka:', error);
-    res.status(500).json({ error: 'Wystąpił błąd podczas rozpoznawania zdjęcia.' });
-    setTimeout(() => {
-      res.status(500).json({ error: '5 sekund oddechu' });
-    }, 5000);
   }
 });
 
