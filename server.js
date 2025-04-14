@@ -3,18 +3,17 @@ const multer = require('multer');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const FormData = require('form-data');
 const cors = require('cors');
-const fs = require('fs');  // Zaimportowanie modułu fs
+const fs = require('fs');
 
 const app = express();
 const upload = multer();
 app.use(cors());
 
-// 🔑 Wstaw swój token tutaj (jeśli masz):
-const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTA0NzcxLCJleHAiOjE3NDQzNzEyMDN9.aqPtlVP830WIqPJOJbuJCe12pUz-zyRWDr4t5SGFFdhm7QgNkuOSpm6m9w4sNq1XcXgljK4ty-3PZw-PhQyGKg';
+// token API:
+const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTEzMTgxLCJleHAiOjE3NDQ3NDIxMjF9.qIzSOYduvD_KeK1N01I7YqZ_szZ1eBP_qyXIDWQ232tivZx9xbjFkU_hF5kzeH7FfpgApqHejTJ8jrFNwlbpJA';
 
-// Nagłówek User-Agent zgodny z wymaganiami iNaturalist
-const USER_AGENT = 'kotombo/1.0 (kotomboo@gmail.com)';
-
+// Nagłówek User-Agent:
+const USER_AGENT = 'kornad/1.0 (loll70760@gmail.com)';
 
 app.post('/api/identify', upload.single('image'), async (req, res) => {
   try {
