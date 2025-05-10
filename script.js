@@ -138,3 +138,91 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+// Obsługa widgetu opinii
+const feedbackToggle = document.createElement('button');
+feedbackToggle.id = 'feedback-toggle';
+feedbackToggle.textContent = 'Zostaw opinię';
+
+const feedbackForm = document.createElement('div');
+feedbackForm.id = 'feedback-form';
+feedbackForm.classList.add('hidden');
+
+const feedbackTextarea = document.createElement('textarea');
+feedbackTextarea.id = 'feedback-text';
+feedbackTextarea.placeholder = 'Twoja opinia...';
+
+// Sekcja gwiazdek + przycisk w jednej linii
+const starsRow = document.createElement('div');
+starsRow.className = 'stars-row';
+
+const starsGroup = document.createElement('div');
+starsGroup.className = 'stars-group';
+
+// dodajemy gwiazdki od 5 do 1
+for (let i = 5; i >= 1; i--) {
+  const input = document.createElement('input');
+  input.type = 'radio';
+  input.name = 'stars';
+  input.id = `star${i}`;
+  input.value = i;
+
+  const label = document.createElement('label');
+  label.htmlFor = `star${i}`;
+  label.textContent = '★';
+
+  starsGroup.appendChild(input);
+  starsGroup.appendChild(label);
+}
+
+
+const feedbackSubmit = document.createElement('button');
+feedbackSubmit.id = 'feedback-submit';
+feedbackSubmit.textContent = 'Wyślij';
+
+starsRow.appendChild(starsGroup);
+starsRow.appendChild(feedbackSubmit);
+
+feedbackForm.appendChild(feedbackTextarea);
+feedbackForm.appendChild(starsRow);
+
+const feedbackWidget = document.createElement('div');
+feedbackWidget.id = 'feedback-widget';
+feedbackWidget.appendChild(feedbackToggle);
+feedbackWidget.appendChild(feedbackForm);
+
+document.body.appendChild(feedbackWidget);
+
+feedbackToggle.addEventListener('click', () => {
+  feedbackForm.classList.toggle('hidden');
+});
+
+feedbackSubmit.addEventListener('click', async () => {
+  const text = feedbackTextarea.value.trim();
+  const stars = document.querySelector('input[name="stars"]:checked')?.value;
+
+  if (!text || !stars) {
+    alert('Uzupełnij opinię i liczbę gwiazdek.');
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:3001/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, stars })
+    });
+
+    if (response.ok) {
+      alert('Dziękujemy za opinię!');
+      feedbackTextarea.value = '';
+      feedbackForm.classList.add('hidden');
+      document.querySelector(`input[name="stars"]:checked`).checked = false;
+    } else {
+      alert('Błąd podczas zapisu opinii.');
+    }
+  } catch (err) {
+    console.error('Błąd:', err);
+    alert('Błąd połączenia z serwerem.');
+  }
+});

@@ -129,4 +129,83 @@ body {
   .result-info a:hover {
     text-decoration: underline;
   }
+
+  #feedback-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+#feedback-toggle {
+  background-color: #10b981;
+  border-radius: 8px;
+}
+
+#feedback-form {
+  margin-top: 0.5em;
+  background: #f1f5f9;
+  padding: 1em;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+  width: 280px;
+}
+
+body.dark #feedback-form {
+  background: #1e293b;
+  color: white;
+}
+
+#feedback-text {
+  display: block;
+  margin: 0 auto 1em auto;
+  width: 95%;
+  height: 70px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: none;
+  padding: 0.5em;
+  font-family: inherit;
+}
+
+.stars-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stars-group {
+  direction: rtl;
+  display: flex;
+}
+
+.stars-group input[type="radio"] {
+  display: none;
+}
+
+.stars-group label {
+  font-size: 1.6em;
+  color: #ccc;
+  cursor: pointer;
+  padding: 0 2px;
+  transition: color 0.2s;
+}
+
+.stars-group input:checked ~ label,
+.stars-group label:hover,
+.stars-group label:hover ~ label {
+  color: gold;
+}
+
+
+#feedback-submit {
+  background-color: #1e40af;
+  padding: 0.4em 1em;
+  font-size: 0.9em;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+
+
    
