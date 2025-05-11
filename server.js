@@ -52,6 +52,26 @@ app.post('/api/identify', upload.single('image'), async (req, res) => {
     console.error('Błąd podczas rozpoznawania ptaka:', error);
   }
 });
+const path = require('path');
+
+// Endpoint do zapisu opinii do pliku feedback.txt
+app.use(express.json());
+app.post('/api/feedback', (req, res) => {
+  const { text, stars } = req.body;
+  if (!text || !stars) return res.status(400).send('Brak danych');
+
+  const entry = `[${new Date().toISOString()}] ${stars}⭐ - ${text}\n`;
+  const filePath = path.join(__dirname, 'feedback.txt');
+  
+  fs.appendFile(filePath, entry, (err) => {
+    if (err) {
+      console.error('Błąd zapisu opinii:', err);
+      return res.status(500).send('Błąd serwera');
+    }
+    res.status(200).send('Opinia zapisana');
+  });
+});
+
 
 // Uruchomienie serwera na porcie 3001
 const PORT = 3001;
