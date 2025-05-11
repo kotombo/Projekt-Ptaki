@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bird Identifier</title>
@@ -16,8 +17,9 @@
     <nav>
         <a href="index.html">Identyfikacja Zdjęcia</a>
         <a href="batch.html">Identyfikacja Folderu</a>
-        <a href="authors.html">O Nas</a>
         <a href="history.html">Twoje Podboje</a>
+        <a href="authors.html">O Nas</a>
+
     </nav>
   </header>
   
@@ -33,6 +35,48 @@
       <div id="loading-spinner" class="hidden">Przetwarzanie zdjęcia...</div>
       <div id="api-response" data-error="Nie udało się rozpoznać ptaka."></div>
     </section>
+    <h2>Jak to zrobić?</h2>
+    <section class="animation-section">
+      
+      <div class="text">
+        <h2>1.</h2>
+        <p>Kliknij przycisk „Wybierz plik” znajdujący się na stronie. Zostanie otwarte okno eksploratora plików, w którym możesz wskazać zdjęcie ptaka zapisane na Twoim urządzeniu.</p>
+      </div>
+      <div class="image1">
+        <img src="zdjecia/poradnik1.png" alt="Przykładowy ptak" />
+      </div>
+    </section>
+
+    <section class="image">
+      <p></p>
+    </section>
+
+    <section class="animation-section">
+      <div class="image1">
+        <img src="zdjecia/poradnik2.png" alt="Przykładowy ptak" />
+      </div>
+      <div class="text">
+        <h2>2.</h2>
+        <p>Wskaż zdjęcie zawierające sylwetkę ptaka, najlepiej wyraźne, w naturalnym otoczeniu. Aplikacja najlepiej radzi sobie z pojedynczym ptakiem na zdjęciu.</p>
+      </div>
+      
+    </section>
+
+    <section class="image">
+      <p></p>
+    </section>
+
+    <section class="animation-section">
+      
+      <div class="text">
+        <h2>3.</h2>
+        <p>Po wgraniu zdjęcia kliknij przycisk „Zidentyfikuj”. W ciągu kilku sekund otrzymasz wynik wraz z nazwą ptaka, jego zdjęciem i linkiem do Wikipedii.</p>
+      </div>
+      <div class="image1">
+        <img src="zdjecia/poradnik3.png" alt="Przykładowy ptak" />
+      </div>
+    </section>
+
   </main>
 
   <!-- Skrypt z logiką interfejsu -->

@@ -22,28 +22,28 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Przycisk pobierania pliku tekstowego z wynikami
-  const downloadBtn = document.createElement('button');
-  downloadBtn.textContent = 'Pobierz notatnik';
-  downloadBtn.style.marginTop = '1em';
-  downloadBtn.addEventListener('click', () => {
-    const single = localStorage.getItem('notatnik_single') || '';
-    const batch = localStorage.getItem('notatnik_batch') || '';
-    const combined = single + batch;
-    if (!combined.trim()) return;
+  // const downloadBtn = document.createElement('button');
+  // downloadBtn.textContent = 'Pobierz notatnik';
+  // downloadBtn.style.marginTop = '1em';
+  // downloadBtn.addEventListener('click', () => {
+  //   const single = localStorage.getItem('notatnik_single') || '';
+  //   const batch = localStorage.getItem('notatnik_batch') || '';
+  //   const combined = single + batch;
+  //   if (!combined.trim()) return;
 
-    const blob = new Blob([combined], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'notatnik.txt';
-    a.click();
-    URL.revokeObjectURL(url);
-    localStorage.removeItem('notatnik_single');
-    localStorage.removeItem('notatnik_batch');
-  });
-  resultBox.parentElement.appendChild(downloadBtn);
+  //   const blob = new Blob([combined], { type: 'text/plain' });
+  //   const url = URL.createObjectURL(blob);
+  //   const a = document.createElement('a');
+  //   a.href = url;
+  //   a.download = 'notatnik.txt';
+  //   a.click();
+  //   URL.revokeObjectURL(url);
+  //   localStorage.removeItem('notatnik_single');
+  //   localStorage.removeItem('notatnik_batch');
+  // });
+  // resultBox.parentElement.appendChild(downloadBtn);
 
-  if (!form) return;
+  // if (!form) return;
 
   // Obsługa wysyłki zdjęcia do API po kliknięciu „Zidentyfikuj”
   form.addEventListener('submit', async function (e) {

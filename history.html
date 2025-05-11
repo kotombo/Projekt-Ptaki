@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Strona Główna</title>
@@ -15,8 +16,8 @@
     <nav>
         <a href="index.html">Identyfikacja Zdjęcia</a>
         <a href="batch.html">Identyfikacja Folderu</a>
-        <a href="authors.html">O Nas</a>
         <a href="history.html">Twoje Podboje</a>
+        <a href="authors.html">O Nas</a>
     </nav>
   </header>
 
@@ -27,32 +28,33 @@
   </main>
 
   <script src="script.js"></script>
+  <!-- <div class="text"> -->
+    <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const historyList = document.getElementById('history-list');
+    // Pobierz dane z obu kluczy
+    const single = localStorage.getItem('notatnik_single') || '';
+    const batch  = localStorage.getItem('notatnik_batch')  || '';
+    const allLines = (single + batch)
+      .trim()
+      .split('\n')
+      .filter(line => line.length);
 
-  <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const historyList = document.getElementById('history-list');
-  // Pobierz dane z obu kluczy
-  const single = localStorage.getItem('notatnik_single') || '';
-  const batch  = localStorage.getItem('notatnik_batch')  || '';
-  const allLines = (single + batch)
-    .trim()
-    .split('\n')
-    .filter(line => line.length);
+    if (!allLines.length) {
+      historyList.innerHTML = '<li>Brak zapisanych identyfikacji.</li>';
+      return;
+    }
 
-  if (!allLines.length) {
-    historyList.innerHTML = '<li>Brak zapisanych identyfikacji.</li>';
-    return;
-  }
-
-  allLines.forEach(line => {
-    // każda linia ma format file;angName;latinName;score
-    const [file, engName, latinName, score] = line.split(';');
-    const li = document.createElement('li');
-    li.innerHTML = `<strong>${file}</strong>: ${engName} (<em>${latinName}</em>) – ${score}%`;
-    historyList.appendChild(li);
+    allLines.forEach(line => {
+      // każda linia ma format file;angName;latinName;score
+      const [file, engName, latinName, score] = line.split(';');
+      const li = document.createElement('li');
+      li.innerHTML = `${engName} (<em>${latinName}</em>) – ${score}%`;
+      historyList.appendChild(li);
+    });
   });
-});
-</script>
+  </script>
+<!-- </div> -->
 
 </body>
 </html>

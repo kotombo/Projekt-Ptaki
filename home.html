@@ -1,28 +1,77 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Strona Główna</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="dark">
+
   <header>
     <a href="home.html" class="logo-container">
-        <img src="zdjecia/ptakus_logo.png" alt="Logo Birdentifier" class="logo">
-        <h1>Birdentifier</h1>
+      <img src="zdjecia/ptakus_logo.png" alt="Logo Birdentifier" class="logo" />
+      <h1>Birdentifier</h1>
     </a>
     <nav>
         <a href="index.html">Identyfikacja Zdjęcia</a>
         <a href="batch.html">Identyfikacja Folderu</a>
-        <a href="authors.html">O Nas</a>
         <a href="history.html">Twoje Podboje</a>
-    </nav>
+        <a href="authors.html">O Nas</a>    </nav>
   </header>
 
+  <!-- Tło wideo -->
+  <section class="hero">
+      <video autoplay muted loop id="background-video">
+    <source src="video/tlo1.mp4" type="video/mp4" />
+  </video>
+      <h2>Witamy w Birdentifier</h2>
+    </section>
 
-  <main>
+
+  <!-- Główna zawartość -->
+  <main class="main-home">
+
     
+    <section class="animation-section">
+      
+      <div class="text">
+        <p>Birdentifier to inteligentna aplikacja, która rozpoznaje ptaki na podstawie przesłanego zdjęcia. Wystarczy jedno kliknięcie, by poznać nazwę, gatunek i otrzymać link do Wikipedii.</p>
+      </div>
+      <div class="image1">
+        <img src="zdjecia/foto1.png" alt="Przykładowy ptak" />
+      </div>
+    </section>
+
+    <section class="image">
+      <p></p>
+    </section>
+
+    <section class="animation-section">
+      <div class="image1">
+        <img src="zdjecia/foto2.png" alt="Przykładowy ptak" />
+      </div>
+      <div class="text">
+        <p>Wgraj zdjęcie, a Birdentifier przeanalizuje je za pomocą sztucznej inteligencji. Model porównuje obraz z tysiącami znanych gatunków ptaków i podpowiada najbardziej trafny wynik.</p>
+      </div>
+      
+    </section>
+
+    <section class="image">
+      <p></p>
+    </section>
+
+    <section class="animation-section">
+      
+      <div class="text">
+        <p>Nasza aplikacja to idealne narzędzie dla pasjonatów przyrody, nauczycieli, fotografów oraz wszystkich, którzy chcą poznać ptaki z najbliższego otoczenia — i tych z dalekich stron świata.</p>
+      </div>
+      <div class="image1">
+        <img src="zdjecia/foto3.png" alt="Przykładowy ptak" />
+      </div>
+    </section>
+
   </main>
 
   <script src="script.js"></script>
