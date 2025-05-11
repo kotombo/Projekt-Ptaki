@@ -7,27 +7,21 @@
   <title>Bird Identifier</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark">
-  <!-- Nagłówek aplikacji -->
+<body>
   <header>
-    <img src="zdjecia/ptakus_logo.png" alt="Logo Birdentifier" class="logo">
-    <h1>Birdentifier</h1>
+    <a href="home.html" class="logo-container">
+        <img src="zdjecia/ptakus_logo.png" alt="Logo Birdentifier" class="logo">
+        <h1>Birdentifier</h1>
+    </a>
+    <nav>
+        <a href="index.html">Identyfikacja Zdjęcia</a>
+        <a href="batch.html">Identyfikacja Folderu</a>
+        <a href="authors.html">O Nas</a>
+        <a href="history.html">Twoje Podboje</a>
+    </nav>
   </header>
-
-  <!-- Pasek nawigacji -->
-  <nav>
-    <a href="home.html">Strona Główna</a>
-    <a href="index.html">Identyfikacja Zdjęcia</a>
-    <a href="batch.html">Identyfikacja Folderu</a>
-    <a href="authors.html">Autorzy</a>
-  </nav>
-
-  <!-- Sekcja główna zawierająca formularz identyfikacji -->
+  
   <main>
-    <div class="top-controls">
-      <button id="toggle-theme">Zmień tryb</button>
-    </div>
-
     <section id="home">
       <h2>Wgraj zdjęcie ptaka, aby rozpocząć identyfikację</h2>
       <form id="upload-form">
@@ -45,6 +39,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-
-

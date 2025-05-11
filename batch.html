@@ -6,26 +6,21 @@
   <title>Batch Identifier</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="dark">
+<body>
   <header>
-    <h1>Identyfikacja Folderu</h1>
+    <a href="home.html" class="logo-container">
+        <img src="zdjecia/ptakus_logo.png" alt="Logo Birdentifier" class="logo">
+        <h1>Birdentifier</h1>
+    </a>
+    <nav>
+        <a href="index.html">Identyfikacja Zdjęcia</a>
+        <a href="batch.html">Identyfikacja Folderu</a>
+        <a href="authors.html">O Nas</a>
+        <a href="history.html">Twoje Podboje</a>
+    </nav>
   </header>
 
-  <!-- Pasek nawigacyjny -->
-  <nav>
-    <a href="home.html">Strona Główna</a>
-    <a href="index.html">Identyfikacja Zdjęcia</a>
-    <a href="batch.html">Identyfikacja Folderu</a>
-    <a href="authors.html">Autorzy</a>
-  </nav>
-
   <main>
-    <div class="top-controls">
-      <!-- Przycisk do zmiany trybu -->
-      <button id="toggle-theme">Zmień tryb</button>
-    </div>
-
-    <!-- Sekcja z formularzem do przesyłania folderu zdjęć -->
     <section>
       <h2>Wgraj folder ze zdjęciami ptaków</h2>
       <form id="batch-form">
@@ -48,11 +43,6 @@
       const spinner = document.getElementById('loading-spinner');
       const resultBox = document.getElementById('batch-response');
       const themeBtn = document.getElementById('toggle-theme');
-
-      // Zmiana trybu ciemny/jasny
-      themeBtn?.addEventListener('click', () => {
-        document.body.classList.toggle('dark');
-      });
 
       // Tworzenie przycisku do pobrania wyników jako notatnika
       const downloadBtn = document.createElement('button');

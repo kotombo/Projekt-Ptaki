@@ -3,31 +3,56 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(to right, #e5e5e5, #f5f5f5);
     color: #333333;
+    background: linear-gradient(to right, #333333, #818483);
+    color: #f5f5f5;
 }
 
 header {
+    font-family: 'Quicksand', sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center; /* Wyrównuje elementy pionowo */
-    padding: 1em;
-    background-color: #444444;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1em 2em;
+    background-color: #222222;
+    font-size: 15px;
+}
+
+header a:hover {
+    transform: scale(1.02);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    margin-right: 2em;
+}
+
+.logo-container h1 {
+    font-size: 1.5em;
+    color: #f5f5f5;
+    margin: 0;
 }
 
 nav {
     display: flex;
-    justify-content: center;
-    background-color: #666666;
+    gap: 1em 2em;
+    justify-content: flex-start;
+    background-color: #222222;
+    align-items: center;
 }
 
 nav a {
-    padding: 1em 2em;
+    padding: 0.5em 1em;
     color: #f5f5f5;
     text-decoration: none;
     transition: background-color 0.3s ease;
+    font-size: 1em;
 }
 
 nav a:hover {
-    background-color: #555555;
+    transform: scale(1.03);
 }
 
 main {
@@ -78,26 +103,8 @@ button:hover {
     display: none;
 }
 
-/* 🌙 Tryb ciemny */
-body.dark {
-    background: linear-gradient(to right, #333333, #444444);
-    color: #f5f5f5;
-}
-
-body.dark header {
-    background-color: #222222;
-}
-
-body.dark nav {
-    background-color: #555555;
-}
-
-body.dark nav a:hover {
-    background-color: #333333;
-}
-
-body.dark main,
-body.dark #api-response {
+body main,
+body #api-response {
     background-color: #333333;
     color: #f5f5f5;
 }
@@ -140,13 +147,13 @@ body.dark #api-response {
 }
 
 #feedback-toggle {
-    background-color: #666666;
+    background-color: #1bd7c1;
     border-radius: 8px;
 }
 
 .logo {
-    width: 100px;
-    float: left;
+    width: 50px;
+    height: auto;
     margin-right: 10px;
 }
 
@@ -159,7 +166,7 @@ body.dark #api-response {
     width: 280px;
 }
 
-body.dark #feedback-form {
+body #feedback-form {
     background: #333333;
     color: #f5f5f5;
 }
@@ -202,7 +209,7 @@ body.dark #feedback-form {
 .stars-group input:checked ~ label,
 .stars-group label:hover,
 .stars-group label:hover ~ label {
-    color: #666666;
+    color: #ebbd35;
 }
 
 #feedback-submit {

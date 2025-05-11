@@ -5,25 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const spinner = document.getElementById('loading-spinner');
   const resultBox = document.getElementById('api-response');
 
-  // Przełącznik trybu jasny/ciemny
-  const themeBtn = document.getElementById('toggle-theme');
-  function applyTheme(theme) {
-    if (theme === 'dark') {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
-  }
-
-  // Funkcja do zmiany trybu i zapisania go w localStorage
-  function toggleTheme() {
-    const isDark = document.body.classList.toggle('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  }
-
-  themeBtn?.addEventListener('click', toggleTheme);
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  applyTheme(savedTheme);
 
   // Obsługa przełącznika języka PL/EN
   const langSelect = document.getElementById('language-select');
@@ -125,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const line = `${fileName};${engName};${latinName};${score}\n`;
 
         const prev = localStorage.getItem('notatnik_single') || '';
-        localStorage.setItem('notatnik_single', line);
+        localStorage.setItem('notatnik_single', prev + line);
 
       } else {
         resultBox.textContent = resultBox.getAttribute('data-error') || 'Nie udało się rozpoznać ptaka.';
