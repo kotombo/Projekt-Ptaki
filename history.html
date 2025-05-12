@@ -25,7 +25,19 @@
 
   <main>
     <h2>Twoja historia identyfikacji</h2>
-    <p id="history-list"></p>
+    <table id="history-table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Nazwa (EN)</th>
+          <th>Nazwa (Łac.)</th>
+          <th>Skuteczność</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Wiersze zostaną wstawione JS-em -->
+      </tbody>
+    </table>
 
     <button id="clear-history" class="btn-clear" style="margin-top:1em">Wyczyść historię</button>
 
@@ -35,37 +47,57 @@
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const historyList = document.getElementById('history-list');
+    const tableBody = document.querySelector('#history-table tbody');
     const clearBtn = document.getElementById('clear-history');
 
     // Pobierz dane z obu kluczy
-    const single = localStorage.getItem('notatnik_single') || '';
-    const batch  = localStorage.getItem('notatnik_batch')  || '';
-    const allLines = (single + batch)
-      .trim()
-      .split('\n')
-      .filter(line => line.length);
+    function renderHistory() {
+      tableBody.innerHTML = '';  // wyczyść tabelkę
 
-    if (!allLines.length) {
-      historyList.innerHTML = '<li>Brak zapisanych identyfikacji.</li>';
-      return;
+      const single = localStorage.getItem('notatnik_single') || '';
+      const batch  = localStorage.getItem('notatnik_batch')  || '';
+      const allLines = (single + batch)
+        .trim()
+        .split('\n')
+        .filter(l => l.length);
+
+      if (!allLines.length) {
+        tableBody.innerHTML = '<tr><td colspan="4">Brak zapisanych identyfikacji.</td></tr>';
+        return;
+      }
+
+      allLines.forEach(line => {
+        const [timestamp, /*pominiecie*/, engName, latinName, score] = line.split(';');
+        const date = new Date(timestamp);
+        const formattedDate = isNaN(date)
+          ? '—'
+          : date.toLocaleString('pl-PL', {
+              year: 'numeric', month: '2-digit', day: '2-digit',
+              hour: '2-digit', minute: '2-digit'
+            });
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <tr>
+            <td>${formattedDate}</td>
+            <td>${engName}</td>
+            <td><em>${latinName}</em></td>
+            <td>${score}%</td>
+          </tr>
+        `;
+        tableBody.appendChild(tr);
+      });
     }
-
-    // Wyświetlanie listy
-    allLines.forEach(line => {
-      const [file, engName, latinName, score] = line.split(';');
-      const li = document.createElement('li');
-      li.innerHTML = `${engName} (<em>${latinName}</em>) – ${score}%`;
-      historyList.appendChild(li);
-    });
 
     // Czyszczenie historii
     clearBtn.addEventListener('click', () => {
       if (!confirm('Na pewno chcesz usunąć całą historię?')) return;
       localStorage.removeItem('notatnik_single');
       localStorage.removeItem('notatnik_batch');
-      location.reload();
+      renderHistory();
     });
+
+    renderHistory();
 
     // Inicjalizacja mapy
     const map = L.map('map').setView([20, 0], 2);
@@ -75,7 +107,7 @@
 
     // Dodanie znaczników z lokalizacji
     allLines.forEach(line => {
-      const [file, engName, latinName, score, lat, lon] = line.split(';');
+      const [timestamp, file, engName, latinName, score, lat, lon] = line.split(';');
       if (lat && lon) {
         const marker = L.marker([parseFloat(lat), parseFloat(lon)]).addTo(map);
         marker.bindPopup(`<strong>${engName}</strong><br><em>${latinName}</em><br>Wynik: ${score}%`);

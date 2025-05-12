@@ -330,3 +330,20 @@ body #feedback-form {
   background: rgba(255, 255, 255, 0.05);
   color: white;
 }
+
+#history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+
+#history-table th, #history-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#history-table th {
+  background-color: #252525;
+  font-weight: bold;
+}

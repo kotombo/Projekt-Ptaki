@@ -103,10 +103,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const engName = best.taxon.preferred_common_name || best.taxon.name || 'brak';
         const latinName = best.taxon.name || 'brak';
         const score = Math.round(best.vision_score || best.combined_score || 0);
-        const line = `${fileName};${engName};${latinName};${score}\n`;
+        const timestamp = new Date().toISOString();
+        const line = `${timestamp};${fileName};${engName};${latinName};${score}\n`;
 
         const prev = localStorage.getItem('notatnik_single') || '';
-        localStorage.setItem('notatnik_single', prev + line);
+        localStorage.setItem('notatnik_single', line + prev);
 
       } else {
         resultBox.textContent = resultBox.getAttribute('data-error') || 'Nie udało się rozpoznać ptaka.';
