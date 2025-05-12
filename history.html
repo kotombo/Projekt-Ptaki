@@ -4,8 +4,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Strona Główna</title>
+  <title>Twoje Podboje</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
   <header>
@@ -21,17 +23,21 @@
     </nav>
   </header>
 
-
   <main>
     <h2>Twoja historia identyfikacji</h2>
-    <ul id="history-list"></ul>
+    <p id="history-list"></p>
+
+    <button id="clear-history" class="btn-clear" style="margin-top:1em">Wyczyść historię</button>
+
+    <h2 style="margin-top: 2em;">Mapa zidentyfikowanych gatunków</h2>
+    <div id="map" style="height: 600px; margin-top: 1em;"></div>
   </main>
 
-  <script src="script.js"></script>
-  <!-- <div class="text"> -->
-    <script>
+  <script>
   document.addEventListener('DOMContentLoaded', () => {
     const historyList = document.getElementById('history-list');
+    const clearBtn = document.getElementById('clear-history');
+
     // Pobierz dane z obu kluczy
     const single = localStorage.getItem('notatnik_single') || '';
     const batch  = localStorage.getItem('notatnik_batch')  || '';
@@ -45,16 +51,37 @@
       return;
     }
 
+    // Wyświetlanie listy
     allLines.forEach(line => {
-      // każda linia ma format file;angName;latinName;score
       const [file, engName, latinName, score] = line.split(';');
       const li = document.createElement('li');
       li.innerHTML = `${engName} (<em>${latinName}</em>) – ${score}%`;
       historyList.appendChild(li);
     });
+
+    // Czyszczenie historii
+    clearBtn.addEventListener('click', () => {
+      if (!confirm('Na pewno chcesz usunąć całą historię?')) return;
+      localStorage.removeItem('notatnik_single');
+      localStorage.removeItem('notatnik_batch');
+      location.reload();
+    });
+
+    // Inicjalizacja mapy
+    const map = L.map('map').setView([20, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Dodanie znaczników z lokalizacji
+    allLines.forEach(line => {
+      const [file, engName, latinName, score, lat, lon] = line.split(';');
+      if (lat && lon) {
+        const marker = L.marker([parseFloat(lat), parseFloat(lon)]).addTo(map);
+        marker.bindPopup(`<strong>${engName}</strong><br><em>${latinName}</em><br>Wynik: ${score}%`);
+      }
+    });
   });
   </script>
-<!-- </div> -->
-
 </body>
 </html>
