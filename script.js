@@ -5,45 +5,14 @@ document.addEventListener('DOMContentLoaded', function () {
   const spinner = document.getElementById('loading-spinner');
   const resultBox = document.getElementById('api-response');
 
+  const toggle = document.getElementById('extended-analysis-toggle');
+  const modal = document.getElementById('modal');
+  const modalClose = document.getElementById('modal-close');
+  const analysisContent = document.getElementById('modal-content');
 
-  // Obsługa przełącznika języka PL/EN
-  const langSelect = document.getElementById('language-select');
-  langSelect?.addEventListener('change', (e) => {
-    const lang = e.target.value;
-    const text = {
-      pl: { title: 'Wgraj zdjęcie ptaka, aby rozpocząć identyfikację', button: 'Zidentyfikuj', loading: 'Przetwarzanie zdjęcia...', error: 'Nie udało się rozpoznać ptaka.', download: 'Pobierz notatnik' },
-      en: { title: 'Upload a bird photo to start identification', button: 'Identify', loading: 'Processing image...', error: 'Bird could not be identified.', download: 'Download notebook' }
-    };
-    document.querySelector('#home h2').textContent = text[lang].title;
-    document.querySelector('#upload-form button').textContent = text[lang].button;
-    spinner.textContent = text[lang].loading;
-    resultBox.setAttribute('data-error', text[lang].error);
-    downloadBtn.textContent = text[lang].download;
+  modalClose.addEventListener('click', () => {
+    modal.classList.add('hidden');
   });
-
-  // Przycisk pobierania pliku tekstowego z wynikami
-  // const downloadBtn = document.createElement('button');
-  // downloadBtn.textContent = 'Pobierz notatnik';
-  // downloadBtn.style.marginTop = '1em';
-  // downloadBtn.addEventListener('click', () => {
-  //   const single = localStorage.getItem('notatnik_single') || '';
-  //   const batch = localStorage.getItem('notatnik_batch') || '';
-  //   const combined = single + batch;
-  //   if (!combined.trim()) return;
-
-  //   const blob = new Blob([combined], { type: 'text/plain' });
-  //   const url = URL.createObjectURL(blob);
-  //   const a = document.createElement('a');
-  //   a.href = url;
-  //   a.download = 'notatnik.txt';
-  //   a.click();
-  //   URL.revokeObjectURL(url);
-  //   localStorage.removeItem('notatnik_single');
-  //   localStorage.removeItem('notatnik_batch');
-  // });
-  // resultBox.parentElement.appendChild(downloadBtn);
-
-  // if (!form) return;
 
   // Obsługa wysyłki zdjęcia do API po kliknięciu „Zidentyfikuj”
   form.addEventListener('submit', async function (e) {
@@ -71,6 +40,20 @@ document.addEventListener('DOMContentLoaded', function () {
           const bScore = b.vision_score || b.combined_score || 0;
           return bScore - aScore;
         });
+        const best = sorted[0];
+        const engName = best.taxon.preferred_common_name || best.taxon.name || '—';
+        const latinName = best.taxon.name || '—';
+        const description = best.taxon.wikipedia_summary || 'Brak opisu.';
+
+        // Jeśli przełącznik aktywny, pokaż modal rozszerzonej analizy
+        if (toggle.checked) {
+          analysisContent.innerHTML = `
+            <p><strong>Angielska nazwa:</strong> ${engName}</p>
+            <p><strong>Łacińska nazwa:</strong> ${latinName}</p>
+            <p><strong>Opis:</strong> ${description}</p>
+          `;
+          modal.classList.remove('hidden');
+        }
 
         // Formatowanie wyników
         const listItems = sorted.map((r) => {
@@ -81,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
           const wikiUrl = r.taxon.wikipedia_url || '#';
           const engName = r.taxon.preferred_common_name || r.taxon.name || 'brak'
           const latinName = r.taxon.name || 'brak'
-          
 
           const nameLink = wikiUrl !== '#' 
             ? `<a href="${wikiUrl}" target="_blank" rel="noopener noreferrer">${engName}</a>` 
@@ -97,11 +79,8 @@ document.addEventListener('DOMContentLoaded', function () {
         resultBox.innerHTML = `<ol>${listItems}</ol>`;
 
         // Zapis najlepszego wyniku do localStorage
-        const best = sorted[0];
         const fullName = selectedFile.name || 'brak_nazwy';
         const fileName = fullName.replace(/\.[^/.]+$/, '');
-        const engName = best.taxon.preferred_common_name || best.taxon.name || 'brak';
-        const latinName = best.taxon.name || 'brak';
         const score = Math.round(best.vision_score || best.combined_score || 0);
         const timestamp = new Date().toISOString();
         const line = `${timestamp};${fileName};${engName};${latinName};${score}\n`;

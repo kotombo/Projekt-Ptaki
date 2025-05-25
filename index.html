@@ -27,13 +27,28 @@
     <section id="home">
       <h2>Wgraj zdjęcie ptaka, aby rozpocząć identyfikację</h2>
       <form id="upload-form">
+        <label>
+          <input type="checkbox" id="extended-analysis-toggle"> Włącz rozszerzoną analizę
+        </label>
         <input type="file" id="bird-photo" accept="image/*" required /> <br />
         <button type="submit">Zidentyfikuj</button>
       </form>
 
       <!-- Elementy odpowiedzialne za feedback użytkownika -->
       <div id="loading-spinner" class="hidden">Przetwarzanie zdjęcia...</div>
-      <div id="api-response" data-error="Nie udało się rozpoznać ptaka."></div>
+      <!-- kontener dwóch kolumn -->
+      <div class="analysis-wrapper">
+        <div id="api-response" data-error="Nie udało się rozpoznać ptaka." class="analysis-panel"></div>
+
+        <div id="modal" class="hidden analysis-panel">
+          <div class="modal-content">
+            <span id="modal-close" class="close">&times;</span>
+            <h2>Rozszerzona analiza ptaka</h2>
+            <div id="modal-content">Brak danych.</div>
+          </div>
+        </div>
+      </div>
+
     </section>
     <h2>Jak to zrobić?</h2>
     <section class="animation-section">

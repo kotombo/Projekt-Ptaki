@@ -123,7 +123,7 @@ body #api-response {
 }
 
 .result-image {
-    width: 60px;
+    width: 300px;
     height: auto;
     border-radius: 6px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
@@ -302,12 +302,10 @@ body #feedback-form {
   max-width: 300px;
   border-radius: 10px;
   box-shadow: 0 0 6px rgba(0,0,0,0.3);
-
 }
 
 .image2 img {
   max-width: 100px;
-
 }
 
 .text {
@@ -346,4 +344,87 @@ body #feedback-form {
 #history-table th {
   background-color: #252525;
   font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-content {
+  position: relative; /* Aby pozycjonować przycisk "×" względem modal-content */
+  background-color: #7c7c7c; /* Jaśniejsze tło dla lepszej czytelności */
+  padding: 20px 30px; /* Większy padding dla estetyki */
+  border-radius: 12px;
+  width: 80%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Delikatny cień dla głębi */
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #949494; /* Kontrastujący kolor dla większej widoczności */
+  transition: color 0.3s; /* Efekt hover */
+}
+
+.close:hover {
+  color: #ff0000; /* Ciemniejszy odcień na hover */
+}
+
+.modal-content h2 {
+  margin-top: 0; /* Usuwa niepotrzebny margines */
+  font-size: 1.5rem;
+  color: #000000;
+}
+
+.modal-content p {
+  margin: 10px 0;
+  line-height: 1.5;
+  color: #000000;
+}
+
+/* kontener flex dla wyników i panelu szczegółów */
+.analysis-wrapper {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 2rem;
+  flex-wrap: wrap; /* jeśli ekran jest wąski, panele przejdą jeden pod drugim */
+}
+
+/* wspólny panel dla obu sekcji */
+.analysis-panel {
+  background-color: #333333;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  flex: 1 1 300px; /* minimalna szerokość 300px, może rosnąć */
+  max-width: 45%;    /* nie więcej niż 45% szerokości kontenera */
+  color: #f5f5f5;
+}
+
+/* wyłącz maskę i pozycjonowanie fixed */
+#modal {
+  position: static;
+  background: none;
+  box-shadow: none;
+  margin: 0;
+}
+
+/* dostosuj .modal-content, żeby wyglądało jak panel */
+.modal-content {
+  background-color: #7c7c7c;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* przycisk zamykania wewnątrz panelu */
+.close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
 }
