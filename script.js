@@ -46,15 +46,52 @@ document.addEventListener('DOMContentLoaded', function () {
         const description = best.taxon.wikipedia_summary || 'Brak opisu.';
 
         // Jeśli przełącznik aktywny, pokaż modal rozszerzonej analizy
-        if (toggle.checked) {
-          analysisContent.innerHTML = `
-            <p><strong>Angielska nazwa:</strong> ${engName}</p>
-            <p><strong>Łacińska nazwa:</strong> ${latinName}</p>
-            <p><strong>Opis:</strong> ${description}</p>
-          `;
-          modal.classList.remove('hidden');
-        }
+				if (toggle.checked && best) {
+				// helper rekurencyjny do renderowania pól
+				// helper rekurencyjny z ograniczeniem głębokości i pomijaniem tablic
+				function renderFields(obj, path = []) {
+				    let html = '';
+				    for (const [key, val] of Object.entries(obj)) {
+				        const fullKey = [...path, key].join('.');
+				        // jeśli to tablica
+				        if (Array.isArray(val)) {
+				            // sprawdź czy zawiera same prymitywy
+				            const allPrimitive = val.every(item => item === null || ['string','number','boolean'].includes(typeof item));
+				            if (allPrimitive) {
+				                // wyrenderuj jako lista wartości
+				                html += `<p><strong>${fullKey}:</strong> [${val.join(', ')}]</p>`;
+				            } else {
+				                // dalej pomijamy głęboki render zagnieżdżonych obiektów
+				                html += `<p><strong>${fullKey}:</strong> [array, ${val.length} elementów]</p>`;
+				            }
+				            continue;
+				        }
+				        // obiekt - rekurencja
+				        if (val !== null && typeof val === 'object') {
+				            html += `<h4 style="margin-top:1em">${fullKey}</h4>`;
+				            html += renderFields(val, [...path, key]);
+				        } else {
+				            // prymitywna wartość
+				            const safeVal = (val === undefined || val === null || val === '')
+				              ? '—'
+				              : String(val);
+				            html += `<p><strong>${fullKey}:</strong> ${safeVal}</p>`;
+				        }
+				    }
+				    return html;
+				}
 
+
+				    // renderujemy TYLKO obiekt best
+				    const fullHtml = renderFields(best);
+
+				    analysisContent.innerHTML = `
+				        <div style="max-height:60vh; overflow:auto; padding-right:1em">
+				            ${fullHtml}
+				        </div>
+				    `;
+				    modal.classList.remove('hidden');
+				}
         // Formatowanie wyników
         const listItems = sorted.map((r) => {
           const rawScore = r.vision_score || r.combined_score;
