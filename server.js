@@ -12,10 +12,10 @@ const upload = multer();
 app.use(cors());
 
 // Token API iNaturalist – wymagany do autoryzacji (należy go trzymać w .env w prawdziwej aplikacji)
-const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTA0NzcxLCJleHAiOjE3NDgyNjI2NzV9.K5OKfEM9g0wIBAc-ToI9vvtNQ-JX3f47wR8lpWkCZN4e_JYAiYAwphBKp9ajGlQ-roSpqChYpaqYtX5xb18qsQ';
+const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTEzMTgxLCJleHAiOjE3NDg0MzU3MDl9.txLvoB9I9k33ZaNMza6srKcN_-EiudA2IPD2WvL2czd24hsSaJckjqXwYOT3nv0sH8JUQaeWgxXnwZ4lR3Myjw';
 
 // Nagłówek User-Agent zgodny z wymaganiami iNaturalist
-const USER_AGENT = 'kotombo/1.0 (kotomboo@gmail.com)';
+const USER_AGENT = 'kornad/1.0 (loll70760@gmail.com)';
 
 
 // Endpoint obsługujący przesłane zdjęcie i przesyłający je do iNaturalist
