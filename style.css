@@ -460,10 +460,6 @@ body.dark #feedback-form {
   font-style: italic;
 }
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 #anecdote-box.anecdote {
   background-color: #222;
   border-left: 5px solid #ffffff;
@@ -472,8 +468,6 @@ body.dark #feedback-form {
   font-style: italic;
   border-radius: 8px;
 }
-<<<<<<< Updated upstream
-=======
 
 /* Styl przełącznika (przycisk suwakowy) */
 .switch {
@@ -642,4 +636,3 @@ body.light #api-response li:first-child .result-image {
 body.light #api-response li:first-child .result-info {
     color: #222222;
 }
->>>>>>> Stashed changes
