@@ -438,3 +438,23 @@ body #feedback-form {
   font-size: 1.3rem;   /* większy font dla nazwy i oceny */
   line-height: 1.4;
 }
+
+.anecdote {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  padding: 1em;
+  margin-top: 1.5em;
+  border-left: 6px solid #ffffff;
+  border-radius: 8px;
+  font-style: italic;
+}
+
+
+#anecdote-box.anecdote {
+  background-color: #222;
+  border-left: 5px solid #ffffff;
+  padding: 1em;
+  margin-top: 1em;
+  font-style: italic;
+  border-radius: 8px;
+}

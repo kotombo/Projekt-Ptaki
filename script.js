@@ -125,6 +125,32 @@ document.addEventListener('DOMContentLoaded', function () {
         const prev = localStorage.getItem('notatnik_single') || '';
         localStorage.setItem('notatnik_single', line + prev);
 
+        // Anegdota: pobierz z backendu
+const anecdoteBox = document.createElement('div');
+anecdoteBox.id = 'anecdote-box';
+anecdoteBox.classList.add('anecdote');
+anecdoteBox.textContent = 'Pobieranie anegdoty...';
+resultBox.appendChild(anecdoteBox);
+
+try {
+  const anecdoteRes = await fetch('http://localhost:3001/api/anegdota', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ birdName: engName })
+  });
+
+  const anecdoteData = await anecdoteRes.json();
+ anecdoteBox.innerHTML = anecdoteData.anecdote
+  .split('\n')
+  .map(line => line.trim())
+  .filter(Boolean)
+  .map(line => `<p>${line}</p>`)
+  .join('');
+} catch (err) {
+  anecdoteBox.textContent = 'Nie udało się pobrać anegdoty.';
+}
+
+
       } else {
         resultBox.textContent = resultBox.getAttribute('data-error') || 'Nie udało się rozpoznać ptaka.';
       }
@@ -136,6 +162,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+
 
 // Obsługa widgetu opinii
 const feedbackToggle = document.createElement('button');

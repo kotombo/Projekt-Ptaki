@@ -12,13 +12,13 @@ const upload = multer();
 app.use(cors());
 
 // Token API iNaturalist – wymagany do autoryzacji (należy go trzymać w .env w prawdziwej aplikacji)
-const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTEzMTgxLCJleHAiOjE3NDkyMDY4MDd9.0k1X3jQzhcrQ1ziDZIswYa6OxRKjTJS1zPrtMQQO9p9ir3IIDATQbFmhvHLwpRK2XTh6rtN2EM84hsLHqHEzHg';
+const API_TOKEN = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo5MTA0NzcxLCJleHAiOjE3NDk0ODg4MTN9.uKRwpmzREaqmJ2YHP2uGVB5m1YLIVjs02QU24vGQh_aStI0MoJiyWf1NVLag-b1whlhHiI1TDdh8d_fksOmSkQ';
 
 // Nagłówek User-Agent zgodny z wymaganiami iNaturalist kotomba
-// const USER_AGENT = 'kotombo/1.0 (kotomboo@gmail.com)';
+const USER_AGENT = 'kotombo/1.0 (kotomboo@gmail.com)';
 
 // Nagłówek User-Agent zgodny z wymaganiami iNaturalist kornada
-const USER_AGENT = 'kornad/1.0 (loll70760@gmail.com)';
+// const USER_AGENT = 'kornad/1.0 (loll70760@gmail.com)';
 
 
 // Endpoint obsługujący przesłane zdjęcie i przesyłający je do iNaturalist
@@ -74,6 +74,43 @@ app.post('/api/feedback', (req, res) => {
     res.status(200).send('Opinia zapisana');
   });
 });
+
+
+// Endpoint do pobierania anegdoty z Hugging Face
+app.post('/api/anegdota', async (req, res) => {
+  const { birdName } = req.body;
+  if (!birdName) return res.status(400).send('Brak nazwy ptaka');
+
+  try {
+    const hfResponse = await fetch('https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta', {
+
+      method: 'POST',
+      headers: {
+        'Authorization': 'Twoj token', 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        inputs: `Write exactly 3 informative and natural-sounding sentences in Polish as a fun fact or interesting anecdote about the bird species "${birdName}". The tone should be friendly and 
+        educational. Do not include the prompt, any explanations in the output and do not use "example:" ,only the three Polish sentences.`,
+
+        parameters: { max_new_tokens: 300, temperature: 0.7, do_sample: true }
+      })
+    });
+
+    const json = await hfResponse.json();
+    console.log('HF RESPONSE:', json);
+    const raw = json[0]?.generated_text || '';
+const output = raw.replace(`Write exactly 3 informative and natural-sounding sentences in Polish as a fun fact or interesting anecdote about the bird species "${birdName}". The tone should be friendly and 
+        educational. Do not include the prompt, any explanations in the output and do not use "example:" ,only the three Polish sentences.`, '').trim();
+
+    res.json({ anecdote: output });
+
+  } catch (err) {
+    console.error('Błąd pobierania anegdoty:', err);
+    res.status(500).send('Błąd serwera przy pobieraniu anegdoty');
+  }
+});
+
 
 
 // Uruchomienie serwera na porcie 3001
