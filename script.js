@@ -252,3 +252,32 @@ feedbackSubmit.addEventListener('click', async () => {
     alert('Błąd połączenia z serwerem.');
   }
 });
+
+// Tryb jasny/ciemny
+// funkcja do przełączenia motywu
+  function toggleTheme() {
+    const body = document.body;
+    if (body.classList.contains('dark')) {
+      body.classList.remove('dark');
+      body.classList.add('light');
+      localStorage.setItem('theme', 'light');
+    } else {
+      body.classList.remove('light');
+      body.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
+      document.body.classList.remove('light');
+    } else if (savedTheme === 'light') {
+      document.body.classList.add('light');
+      document.body.classList.remove('dark');
+    } else {
+      // Opcjonalnie: ustaw domyślny motyw, np. light
+      document.body.classList.add('light');
+    }
+  });

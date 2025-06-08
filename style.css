@@ -1,8 +1,12 @@
-body {
+/* === DARK THEME (obecne style) === */
+body.dark {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(to right, #e5e5e5, #f5f5f5);
-    color: #333333;
+    background: linear-gradient(to right, #333333, #818483);
+    color: #f5f5f5;
+}
+
+body.dark {
     background: linear-gradient(to right, #333333, #818483);
     color: #f5f5f5;
 }
@@ -17,6 +21,11 @@ header {
     font-size: 15px;
 }
 
+body.dark header {
+    background-color: #222222;
+    color: #f5f5f5;
+}
+
 header a:hover {
     transform: scale(1.02);
 }
@@ -29,10 +38,8 @@ header a:hover {
     margin-right: 2em;
 }
 
-.logo-container h1 {
-    font-size: 1.5em;
+body.dark .logo-container h1 {
     color: #f5f5f5;
-    margin: 0;
 }
 
 nav {
@@ -41,6 +48,10 @@ nav {
     justify-content: flex-start;
     background-color: #222222;
     align-items: center;
+}
+
+body.dark nav {
+    background-color: #222222;
 }
 
 nav a {
@@ -58,6 +69,12 @@ nav a:hover {
 main {
     padding: 2em;
     text-align: center;
+}
+
+body.dark main,
+body.dark #api-response {
+    background-color: #333333;
+    color: #f5f5f5;
 }
 
 .top-controls {
@@ -99,12 +116,7 @@ button:hover {
     margin-right: auto;
 }
 
-.hidden {
-    display: none;
-}
-
-body main,
-body #api-response {
+body.dark #api-response {
     background-color: #333333;
     color: #f5f5f5;
 }
@@ -166,7 +178,7 @@ body #api-response {
     width: 280px;
 }
 
-body #feedback-form {
+body.dark #feedback-form {
     background: #333333;
     color: #f5f5f5;
 }
@@ -233,7 +245,6 @@ body #feedback-form {
   object-fit: cover;
   z-index: -1;
 }
-
 
 .logo-container {
   display: flex;
@@ -449,7 +460,10 @@ body #feedback-form {
   font-style: italic;
 }
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 #anecdote-box.anecdote {
   background-color: #222;
   border-left: 5px solid #ffffff;
@@ -458,3 +472,174 @@ body #feedback-form {
   font-style: italic;
   border-radius: 8px;
 }
+<<<<<<< Updated upstream
+=======
+
+/* Styl przełącznika (przycisk suwakowy) */
+.switch {
+  position: absolute;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 26px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* === LIGHT THEME (nowe style pod klasą .light) === */
+
+body.light {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to right, #e5e5e5, #f5f5f5);
+    color: #333333;
+}
+
+body.light header {
+    background-color: #2fe0e6;
+    color: #333333;
+}
+
+body.light .logo-container h1 {
+    color: #333333;
+}
+
+body.light nav {
+    background-color: #2fe0e6;
+}
+
+body.light nav a {
+    color: #333333;
+}
+
+body.light main,
+body.light #api-response {
+    background-color: #f5f5f5;
+    color: #333333;
+}
+
+body.light button {
+    background-color: #a293c7;  /* jasniejszy fiolet */
+    color: #333333;
+}
+
+body.light button:hover {
+    background-color: #8a7eb8;
+}
+
+body.light #api-response {
+    background-color: #f5f5f5;
+    color: #333333;
+}
+
+body.light #feedback-form {
+    background: #f5f5f5;
+    color: #333333;
+}
+
+body.light .anecdote {
+    background-color: #fafafa;
+    color: #333333;
+    border-left-color: #333333;
+}
+
+body.light #anecdote-box.anecdote {
+    background-color: #eee;
+    border-left-color: #333333;
+}
+
+body.light .animation-section,
+body.light .profilowe {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333333;
+}
+
+body.light .animation {
+    background: radial-gradient(circle at center, rgba(0,0,0,0.1), transparent);
+}
+
+body.light .modal-content {
+    background-color: #ddd;
+    color: #333333;
+}
+
+body.light .close {
+    color: #444444;
+}
+
+body.light .close:hover {
+    color: #aa0000;
+}
+
+body.light .analysis-panel {
+    background-color: #f0f0f0;
+    color: #333333;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+body.light #history-table th {
+    background-color: #cccccc;
+    color: #333333;
+}
+
+body.light #feedback-toggle {
+    background-color: #12bba6;
+}
+
+body.light #feedback-submit {
+    background-color: #a293c7;
+    color: #333333;
+}
+
+body.light #feedback-submit:hover {
+    background-color: #8a7eb8;
+}
+
+body.light .slider {
+    background-color: #999;
+}
+
+body.light input:checked + .slider {
+    background-color: #007acc;
+}
+
+body.light #api-response li:first-child .result-image {
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+body.light #api-response li:first-child .result-info {
+    color: #222222;
+}
+>>>>>>> Stashed changes
